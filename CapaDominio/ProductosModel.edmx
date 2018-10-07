@@ -1,0 +1,521 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="Productos.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Empleado">
+          <Key>
+            <PropertyRef Name="EmpleadoCodigo" />
+          </Key>
+          <Property Name="EmpleadoCodigo" Type="nchar" MaxLength="8" Nullable="false" />
+          <Property Name="EmpleadoCargo" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="EmpleadoUser" Type="nvarchar" MaxLength="60" Nullable="false" />
+          <Property Name="EmpleadoPassword" Type="nvarchar" MaxLength="60" Nullable="false" />
+          <Property Name="CodigoPersona" Type="nchar" MaxLength="8" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Gerente">
+          <Key>
+            <PropertyRef Name="GerenteCodigo" />
+          </Key>
+          <Property Name="GerenteCodigo" Type="nchar" MaxLength="8" Nullable="false" />
+          <Property Name="GerenteNegocio" Type="nvarchar" MaxLength="200" Nullable="false" />
+          <Property Name="GerenteUser" Type="nvarchar" MaxLength="60" Nullable="false" />
+          <Property Name="GerentePassword" Type="nvarchar" MaxLength="60" Nullable="false" />
+          <Property Name="PersonaCodigo" Type="nchar" MaxLength="8" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Persona">
+          <Key>
+            <PropertyRef Name="PersonaCodigo" />
+          </Key>
+          <Property Name="PersonaCodigo" Type="nchar" MaxLength="8" Nullable="false" />
+          <Property Name="PersonaDNI" Type="nchar" MaxLength="8" />
+          <Property Name="PersonaApellidoMaterno" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="PersonaApellidoPaterno" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="PersonaNombre" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="PersonaNombreCompleto" Type="varchar" MaxLength="302" StoreGeneratedPattern="Computed" />
+          <Property Name="PersonaEdad" Type="nchar" MaxLength="10" Nullable="false" />
+          <Property Name="PersonaSexo" Type="nchar" MaxLength="1" Nullable="false" />
+          <Property Name="PersonaDireccion" Type="nvarchar" MaxLength="200" Nullable="false" />
+          <Property Name="PersonaTelefono" Type="nchar" MaxLength="9" Nullable="false" />
+          <Property Name="PersonaCorreo" Type="nvarchar" MaxLength="200" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Categoria">
+          <Key>
+            <PropertyRef Name="CategoriaCodigo" />
+          </Key>
+          <Property Name="CategoriaCodigo" Type="nchar" MaxLength="8" Nullable="false" />
+          <Property Name="CategoriaNombre" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="CategoriaDescripcion" Type="varchar" MaxLength="200" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Producto">
+          <Key>
+            <PropertyRef Name="ProductoCodigo" />
+          </Key>
+          <Property Name="ProductoCodigo" Type="nchar" MaxLength="8" Nullable="false" />
+          <Property Name="ProductoNombre" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="ProductoDescripcion" Type="nvarchar" MaxLength="200" Nullable="false" />
+          <Property Name="ProductoPrecioCompra" Type="numeric" Precision="9" Scale="2" Nullable="false" />
+          <Property Name="ProductoPrecioVenta" Type="numeric" Precision="9" Scale="2" Nullable="false" />
+          <Property Name="ProductoUnidadesVendidas" Type="nchar" MaxLength="10" Nullable="false" />
+          <Property Name="ProductoMarca" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="ProductoStock" Type="nchar" MaxLength="10" Nullable="false" />
+          <Property Name="FechaDeRegistro" Type="date" Nullable="false" />
+          <Property Name="CategoriaCodigo" Type="nchar" MaxLength="8" Nullable="false" />
+          <Property Name="PedidoCodigo" Type="nchar" MaxLength="8" Nullable="false" />
+          <Property Name="GerenteCodigo" Type="nchar" MaxLength="8" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Pedido">
+          <Key>
+            <PropertyRef Name="PedidoCodigo" />
+          </Key>
+          <Property Name="PedidoCodigo" Type="nchar" MaxLength="8" Nullable="false" />
+          <Property Name="PedidoDescripcion" Type="nvarchar" MaxLength="200" Nullable="false" />
+          <Property Name="ValorPedido" Type="numeric" Precision="9" Scale="2" />
+          <Property Name="PedidoFechaEmision" Type="date" Nullable="false" />
+          <Property Name="PedidoFechaRecepcion" Type="date" Nullable="false" />
+          <Property Name="PedidoEstado" Type="nchar" MaxLength="10" />
+          <Property Name="ProveedorCodigo" Type="nchar" MaxLength="8" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Proveedor">
+          <Key>
+            <PropertyRef Name="ProveedorCodigo" />
+          </Key>
+          <Property Name="ProveedorCodigo" Type="nchar" MaxLength="8" Nullable="false" />
+          <Property Name="ProveedorNombre" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="ProveedorTelefono" Type="nvarchar" MaxLength="10" Nullable="false" />
+          <Property Name="ProveedorCorreo" Type="nvarchar" MaxLength="200" Nullable="false" />
+        </EntityType>
+        <Association Name="CategoriaCodigoFK">
+          <End Role="Categoria" Type="Self.Categoria" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Producto" Type="Self.Producto" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Categoria">
+              <PropertyRef Name="CategoriaCodigo" />
+            </Principal>
+            <Dependent Role="Producto">
+              <PropertyRef Name="CategoriaCodigo" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="CodigoPersona">
+          <End Role="Persona" Type="Self.Persona" Multiplicity="1" />
+          <End Role="Empleado" Type="Self.Empleado" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Persona">
+              <PropertyRef Name="PersonaCodigo" />
+            </Principal>
+            <Dependent Role="Empleado">
+              <PropertyRef Name="CodigoPersona" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="GerenteCodigo">
+          <End Role="Gerente" Type="Self.Gerente" Multiplicity="1" />
+          <End Role="Producto" Type="Self.Producto" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Gerente">
+              <PropertyRef Name="GerenteCodigo" />
+            </Principal>
+            <Dependent Role="Producto">
+              <PropertyRef Name="GerenteCodigo" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="PedidoCodigoFK">
+          <End Role="Pedido" Type="Self.Pedido" Multiplicity="1" />
+          <End Role="Producto" Type="Self.Producto" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Pedido">
+              <PropertyRef Name="PedidoCodigo" />
+            </Principal>
+            <Dependent Role="Producto">
+              <PropertyRef Name="PedidoCodigo" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="PersonaCodigoFK">
+          <End Role="Persona" Type="Self.Persona" Multiplicity="1" />
+          <End Role="Gerente" Type="Self.Gerente" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Persona">
+              <PropertyRef Name="PersonaCodigo" />
+            </Principal>
+            <Dependent Role="Gerente">
+              <PropertyRef Name="PersonaCodigo" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="ProveedorCodigoFK">
+          <End Role="Proveedor" Type="Self.Proveedor" Multiplicity="1" />
+          <End Role="Pedido" Type="Self.Pedido" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Proveedor">
+              <PropertyRef Name="ProveedorCodigo" />
+            </Principal>
+            <Dependent Role="Pedido">
+              <PropertyRef Name="ProveedorCodigo" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="ProductosStoreContainer">
+          <EntitySet Name="Empleado" EntityType="Self.Empleado" Schema="Administracion" store:Type="Tables" />
+          <EntitySet Name="Gerente" EntityType="Self.Gerente" Schema="Administracion" store:Type="Tables" />
+          <EntitySet Name="Persona" EntityType="Self.Persona" Schema="Administracion" store:Type="Tables" />
+          <EntitySet Name="Categoria" EntityType="Self.Categoria" Schema="Almacen" store:Type="Tables" />
+          <EntitySet Name="Producto" EntityType="Self.Producto" Schema="Almacen" store:Type="Tables" />
+          <EntitySet Name="Pedido" EntityType="Self.Pedido" Schema="Externos" store:Type="Tables" />
+          <EntitySet Name="Proveedor" EntityType="Self.Proveedor" Schema="Externos" store:Type="Tables" />
+          <AssociationSet Name="CategoriaCodigoFK" Association="Self.CategoriaCodigoFK">
+            <End Role="Categoria" EntitySet="Categoria" />
+            <End Role="Producto" EntitySet="Producto" />
+          </AssociationSet>
+          <AssociationSet Name="CodigoPersona" Association="Self.CodigoPersona">
+            <End Role="Persona" EntitySet="Persona" />
+            <End Role="Empleado" EntitySet="Empleado" />
+          </AssociationSet>
+          <AssociationSet Name="GerenteCodigo" Association="Self.GerenteCodigo">
+            <End Role="Gerente" EntitySet="Gerente" />
+            <End Role="Producto" EntitySet="Producto" />
+          </AssociationSet>
+          <AssociationSet Name="PedidoCodigoFK" Association="Self.PedidoCodigoFK">
+            <End Role="Pedido" EntitySet="Pedido" />
+            <End Role="Producto" EntitySet="Producto" />
+          </AssociationSet>
+          <AssociationSet Name="PersonaCodigoFK" Association="Self.PersonaCodigoFK">
+            <End Role="Persona" EntitySet="Persona" />
+            <End Role="Gerente" EntitySet="Gerente" />
+          </AssociationSet>
+          <AssociationSet Name="ProveedorCodigoFK" Association="Self.ProveedorCodigoFK">
+            <End Role="Proveedor" EntitySet="Proveedor" />
+            <End Role="Pedido" EntitySet="Pedido" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="Productos" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Empleado">
+          <Key>
+            <PropertyRef Name="EmpleadoCodigo" />
+          </Key>
+          <Property Name="EmpleadoCodigo" Type="String" MaxLength="8" FixedLength="true" Unicode="true" Nullable="false" />
+          <Property Name="EmpleadoCargo" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="EmpleadoUser" Type="String" MaxLength="60" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="EmpleadoPassword" Type="String" MaxLength="60" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="CodigoPersona" Type="String" MaxLength="8" FixedLength="true" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Persona" Relationship="Self.CodigoPersona" FromRole="Empleado" ToRole="Persona" />
+        </EntityType>
+        <EntityType Name="Gerente">
+          <Key>
+            <PropertyRef Name="GerenteCodigo" />
+          </Key>
+          <Property Name="GerenteCodigo" Type="String" MaxLength="8" FixedLength="true" Unicode="true" Nullable="false" />
+          <Property Name="GerenteNegocio" Type="String" MaxLength="200" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="GerenteUser" Type="String" MaxLength="60" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="GerentePassword" Type="String" MaxLength="60" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="PersonaCodigo" Type="String" MaxLength="8" FixedLength="true" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Producto" Relationship="Self.GerenteCodigo" FromRole="Gerente" ToRole="Producto" />
+          <NavigationProperty Name="Persona" Relationship="Self.PersonaCodigoFK" FromRole="Gerente" ToRole="Persona" />
+        </EntityType>
+        <EntityType Name="Persona">
+          <Key>
+            <PropertyRef Name="PersonaCodigo" />
+          </Key>
+          <Property Name="PersonaCodigo" Type="String" MaxLength="8" FixedLength="true" Unicode="true" Nullable="false" />
+          <Property Name="PersonaDNI" Type="String" MaxLength="8" FixedLength="true" Unicode="true" />
+          <Property Name="PersonaApellidoMaterno" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="PersonaApellidoPaterno" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="PersonaNombre" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="PersonaNombreCompleto" Type="String" MaxLength="302" FixedLength="false" Unicode="false" annotation:StoreGeneratedPattern="Computed" />
+          <Property Name="PersonaEdad" Type="String" MaxLength="10" FixedLength="true" Unicode="true" Nullable="false" />
+          <Property Name="PersonaSexo" Type="String" MaxLength="1" FixedLength="true" Unicode="true" Nullable="false" />
+          <Property Name="PersonaDireccion" Type="String" MaxLength="200" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="PersonaTelefono" Type="String" MaxLength="9" FixedLength="true" Unicode="true" Nullable="false" />
+          <Property Name="PersonaCorreo" Type="String" MaxLength="200" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Empleado" Relationship="Self.CodigoPersona" FromRole="Persona" ToRole="Empleado" />
+          <NavigationProperty Name="Gerente" Relationship="Self.PersonaCodigoFK" FromRole="Persona" ToRole="Gerente" />
+        </EntityType>
+        <EntityType Name="Categoria">
+          <Key>
+            <PropertyRef Name="CategoriaCodigo" />
+          </Key>
+          <Property Name="CategoriaCodigo" Type="String" MaxLength="8" FixedLength="true" Unicode="true" Nullable="false" />
+          <Property Name="CategoriaNombre" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="CategoriaDescripcion" Type="String" MaxLength="200" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="Producto" Relationship="Self.CategoriaCodigoFK" FromRole="Categoria" ToRole="Producto" />
+        </EntityType>
+        <EntityType Name="Producto">
+          <Key>
+            <PropertyRef Name="ProductoCodigo" />
+          </Key>
+          <Property Name="ProductoCodigo" Type="String" MaxLength="8" FixedLength="true" Unicode="true" Nullable="false" />
+          <Property Name="ProductoNombre" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="ProductoDescripcion" Type="String" MaxLength="200" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="ProductoPrecioCompra" Type="Decimal" Precision="9" Scale="2" Nullable="false" />
+          <Property Name="ProductoPrecioVenta" Type="Decimal" Precision="9" Scale="2" Nullable="false" />
+          <Property Name="ProductoUnidadesVendidas" Type="String" MaxLength="10" FixedLength="true" Unicode="true" Nullable="false" />
+          <Property Name="ProductoMarca" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="ProductoStock" Type="String" MaxLength="10" FixedLength="true" Unicode="true" Nullable="false" />
+          <Property Name="FechaDeRegistro" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="CategoriaCodigo" Type="String" MaxLength="8" FixedLength="true" Unicode="true" Nullable="false" />
+          <Property Name="PedidoCodigo" Type="String" MaxLength="8" FixedLength="true" Unicode="true" Nullable="false" />
+          <Property Name="GerenteCodigo" Type="String" MaxLength="8" FixedLength="true" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Gerente" Relationship="Self.GerenteCodigo" FromRole="Producto" ToRole="Gerente" />
+          <NavigationProperty Name="Categoria" Relationship="Self.CategoriaCodigoFK" FromRole="Producto" ToRole="Categoria" />
+          <NavigationProperty Name="Pedido" Relationship="Self.PedidoCodigoFK" FromRole="Producto" ToRole="Pedido" />
+        </EntityType>
+        <EntityType Name="Pedido">
+          <Key>
+            <PropertyRef Name="PedidoCodigo" />
+          </Key>
+          <Property Name="PedidoCodigo" Type="String" MaxLength="8" FixedLength="true" Unicode="true" Nullable="false" />
+          <Property Name="PedidoDescripcion" Type="String" MaxLength="200" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="ValorPedido" Type="Decimal" Precision="9" Scale="2" />
+          <Property Name="PedidoFechaEmision" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="PedidoFechaRecepcion" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="PedidoEstado" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+          <Property Name="ProveedorCodigo" Type="String" MaxLength="8" FixedLength="true" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Producto" Relationship="Self.PedidoCodigoFK" FromRole="Pedido" ToRole="Producto" />
+          <NavigationProperty Name="Proveedor" Relationship="Self.ProveedorCodigoFK" FromRole="Pedido" ToRole="Proveedor" />
+        </EntityType>
+        <EntityType Name="Proveedor">
+          <Key>
+            <PropertyRef Name="ProveedorCodigo" />
+          </Key>
+          <Property Name="ProveedorCodigo" Type="String" MaxLength="8" FixedLength="true" Unicode="true" Nullable="false" />
+          <Property Name="ProveedorNombre" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="ProveedorTelefono" Type="String" MaxLength="10" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="ProveedorCorreo" Type="String" MaxLength="200" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Pedido" Relationship="Self.ProveedorCodigoFK" FromRole="Proveedor" ToRole="Pedido" />
+        </EntityType>
+        <Association Name="CodigoPersona">
+          <End Role="Persona" Type="Self.Persona" Multiplicity="1" />
+          <End Role="Empleado" Type="Self.Empleado" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Persona">
+              <PropertyRef Name="PersonaCodigo" />
+            </Principal>
+            <Dependent Role="Empleado">
+              <PropertyRef Name="CodigoPersona" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="GerenteCodigo">
+          <End Role="Gerente" Type="Self.Gerente" Multiplicity="1" />
+          <End Role="Producto" Type="Self.Producto" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Gerente">
+              <PropertyRef Name="GerenteCodigo" />
+            </Principal>
+            <Dependent Role="Producto">
+              <PropertyRef Name="GerenteCodigo" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="PersonaCodigoFK">
+          <End Role="Persona" Type="Self.Persona" Multiplicity="1" />
+          <End Role="Gerente" Type="Self.Gerente" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Persona">
+              <PropertyRef Name="PersonaCodigo" />
+            </Principal>
+            <Dependent Role="Gerente">
+              <PropertyRef Name="PersonaCodigo" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="CategoriaCodigoFK">
+          <End Role="Categoria" Type="Self.Categoria" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Producto" Type="Self.Producto" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Categoria">
+              <PropertyRef Name="CategoriaCodigo" />
+            </Principal>
+            <Dependent Role="Producto">
+              <PropertyRef Name="CategoriaCodigo" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="PedidoCodigoFK">
+          <End Role="Pedido" Type="Self.Pedido" Multiplicity="1" />
+          <End Role="Producto" Type="Self.Producto" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Pedido">
+              <PropertyRef Name="PedidoCodigo" />
+            </Principal>
+            <Dependent Role="Producto">
+              <PropertyRef Name="PedidoCodigo" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="ProveedorCodigoFK">
+          <End Role="Proveedor" Type="Self.Proveedor" Multiplicity="1" />
+          <End Role="Pedido" Type="Self.Pedido" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Proveedor">
+              <PropertyRef Name="ProveedorCodigo" />
+            </Principal>
+            <Dependent Role="Pedido">
+              <PropertyRef Name="ProveedorCodigo" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="ProductosEntities1" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Empleado" EntityType="Self.Empleado" />
+          <EntitySet Name="Gerente" EntityType="Self.Gerente" />
+          <EntitySet Name="Persona" EntityType="Self.Persona" />
+          <EntitySet Name="Categoria" EntityType="Self.Categoria" />
+          <EntitySet Name="Producto" EntityType="Self.Producto" />
+          <EntitySet Name="Pedido" EntityType="Self.Pedido" />
+          <EntitySet Name="Proveedor" EntityType="Self.Proveedor" />
+          <AssociationSet Name="CodigoPersona" Association="Self.CodigoPersona">
+            <End Role="Persona" EntitySet="Persona" />
+            <End Role="Empleado" EntitySet="Empleado" />
+          </AssociationSet>
+          <AssociationSet Name="GerenteCodigo" Association="Self.GerenteCodigo">
+            <End Role="Gerente" EntitySet="Gerente" />
+            <End Role="Producto" EntitySet="Producto" />
+          </AssociationSet>
+          <AssociationSet Name="PersonaCodigoFK" Association="Self.PersonaCodigoFK">
+            <End Role="Persona" EntitySet="Persona" />
+            <End Role="Gerente" EntitySet="Gerente" />
+          </AssociationSet>
+          <AssociationSet Name="CategoriaCodigoFK" Association="Self.CategoriaCodigoFK">
+            <End Role="Categoria" EntitySet="Categoria" />
+            <End Role="Producto" EntitySet="Producto" />
+          </AssociationSet>
+          <AssociationSet Name="PedidoCodigoFK" Association="Self.PedidoCodigoFK">
+            <End Role="Pedido" EntitySet="Pedido" />
+            <End Role="Producto" EntitySet="Producto" />
+          </AssociationSet>
+          <AssociationSet Name="ProveedorCodigoFK" Association="Self.ProveedorCodigoFK">
+            <End Role="Proveedor" EntitySet="Proveedor" />
+            <End Role="Pedido" EntitySet="Pedido" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="ProductosStoreContainer" CdmEntityContainer="ProductosEntities1">
+          <EntitySetMapping Name="Empleado">
+            <EntityTypeMapping TypeName="Productos.Empleado">
+              <MappingFragment StoreEntitySet="Empleado">
+                <ScalarProperty Name="EmpleadoCodigo" ColumnName="EmpleadoCodigo" />
+                <ScalarProperty Name="EmpleadoCargo" ColumnName="EmpleadoCargo" />
+                <ScalarProperty Name="EmpleadoUser" ColumnName="EmpleadoUser" />
+                <ScalarProperty Name="EmpleadoPassword" ColumnName="EmpleadoPassword" />
+                <ScalarProperty Name="CodigoPersona" ColumnName="CodigoPersona" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Gerente">
+            <EntityTypeMapping TypeName="Productos.Gerente">
+              <MappingFragment StoreEntitySet="Gerente">
+                <ScalarProperty Name="GerenteCodigo" ColumnName="GerenteCodigo" />
+                <ScalarProperty Name="GerenteNegocio" ColumnName="GerenteNegocio" />
+                <ScalarProperty Name="GerenteUser" ColumnName="GerenteUser" />
+                <ScalarProperty Name="GerentePassword" ColumnName="GerentePassword" />
+                <ScalarProperty Name="PersonaCodigo" ColumnName="PersonaCodigo" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Persona">
+            <EntityTypeMapping TypeName="Productos.Persona">
+              <MappingFragment StoreEntitySet="Persona">
+                <ScalarProperty Name="PersonaCodigo" ColumnName="PersonaCodigo" />
+                <ScalarProperty Name="PersonaDNI" ColumnName="PersonaDNI" />
+                <ScalarProperty Name="PersonaApellidoMaterno" ColumnName="PersonaApellidoMaterno" />
+                <ScalarProperty Name="PersonaApellidoPaterno" ColumnName="PersonaApellidoPaterno" />
+                <ScalarProperty Name="PersonaNombre" ColumnName="PersonaNombre" />
+                <ScalarProperty Name="PersonaNombreCompleto" ColumnName="PersonaNombreCompleto" />
+                <ScalarProperty Name="PersonaEdad" ColumnName="PersonaEdad" />
+                <ScalarProperty Name="PersonaSexo" ColumnName="PersonaSexo" />
+                <ScalarProperty Name="PersonaDireccion" ColumnName="PersonaDireccion" />
+                <ScalarProperty Name="PersonaTelefono" ColumnName="PersonaTelefono" />
+                <ScalarProperty Name="PersonaCorreo" ColumnName="PersonaCorreo" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Categoria">
+            <EntityTypeMapping TypeName="Productos.Categoria">
+              <MappingFragment StoreEntitySet="Categoria">
+                <ScalarProperty Name="CategoriaCodigo" ColumnName="CategoriaCodigo" />
+                <ScalarProperty Name="CategoriaNombre" ColumnName="CategoriaNombre" />
+                <ScalarProperty Name="CategoriaDescripcion" ColumnName="CategoriaDescripcion" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Producto">
+            <EntityTypeMapping TypeName="Productos.Producto">
+              <MappingFragment StoreEntitySet="Producto">
+                <ScalarProperty Name="ProductoCodigo" ColumnName="ProductoCodigo" />
+                <ScalarProperty Name="ProductoNombre" ColumnName="ProductoNombre" />
+                <ScalarProperty Name="ProductoDescripcion" ColumnName="ProductoDescripcion" />
+                <ScalarProperty Name="ProductoPrecioCompra" ColumnName="ProductoPrecioCompra" />
+                <ScalarProperty Name="ProductoPrecioVenta" ColumnName="ProductoPrecioVenta" />
+                <ScalarProperty Name="ProductoUnidadesVendidas" ColumnName="ProductoUnidadesVendidas" />
+                <ScalarProperty Name="ProductoMarca" ColumnName="ProductoMarca" />
+                <ScalarProperty Name="ProductoStock" ColumnName="ProductoStock" />
+                <ScalarProperty Name="FechaDeRegistro" ColumnName="FechaDeRegistro" />
+                <ScalarProperty Name="CategoriaCodigo" ColumnName="CategoriaCodigo" />
+                <ScalarProperty Name="PedidoCodigo" ColumnName="PedidoCodigo" />
+                <ScalarProperty Name="GerenteCodigo" ColumnName="GerenteCodigo" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Pedido">
+            <EntityTypeMapping TypeName="Productos.Pedido">
+              <MappingFragment StoreEntitySet="Pedido">
+                <ScalarProperty Name="PedidoCodigo" ColumnName="PedidoCodigo" />
+                <ScalarProperty Name="PedidoDescripcion" ColumnName="PedidoDescripcion" />
+                <ScalarProperty Name="ValorPedido" ColumnName="ValorPedido" />
+                <ScalarProperty Name="PedidoFechaEmision" ColumnName="PedidoFechaEmision" />
+                <ScalarProperty Name="PedidoFechaRecepcion" ColumnName="PedidoFechaRecepcion" />
+                <ScalarProperty Name="PedidoEstado" ColumnName="PedidoEstado" />
+                <ScalarProperty Name="ProveedorCodigo" ColumnName="ProveedorCodigo" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Proveedor">
+            <EntityTypeMapping TypeName="Productos.Proveedor">
+              <MappingFragment StoreEntitySet="Proveedor">
+                <ScalarProperty Name="ProveedorCodigo" ColumnName="ProveedorCodigo" />
+                <ScalarProperty Name="ProveedorNombre" ColumnName="ProveedorNombre" />
+                <ScalarProperty Name="ProveedorTelefono" ColumnName="ProveedorTelefono" />
+                <ScalarProperty Name="ProveedorCorreo" ColumnName="ProveedorCorreo" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="true" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="Ninguno" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

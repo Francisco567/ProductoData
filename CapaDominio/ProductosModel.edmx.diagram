@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="8a5af8b4bac343a99477f86786199080" Name="Diagram1">
+        <EntityTypeShape EntityType="Productos.Empleado" Width="1.5" PointX="3" PointY="3.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="Productos.Gerente" Width="1.5" PointX="3" PointY="6.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="Productos.Persona" Width="1.5" PointX="0.75" PointY="4.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="Productos.Categoria" Width="1.5" PointX="3" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="Productos.Producto" Width="1.5" PointX="5.25" PointY="5.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="Productos.Pedido" Width="1.5" PointX="8.25" PointY="2.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="Productos.Proveedor" Width="1.5" PointX="8.125" PointY="6.375" IsExpanded="true" />
+        <AssociationConnector Association="Productos.CodigoPersona" ManuallyRouted="false" />
+        <AssociationConnector Association="Productos.GerenteCodigo" ManuallyRouted="false" />
+        <AssociationConnector Association="Productos.PersonaCodigoFK" ManuallyRouted="false" />
+        <AssociationConnector Association="Productos.CategoriaCodigoFK" ManuallyRouted="false" />
+        <AssociationConnector Association="Productos.PedidoCodigoFK" ManuallyRouted="false" />
+        <AssociationConnector Association="Productos.ProveedorCodigoFK" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>
